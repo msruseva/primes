@@ -3,6 +3,8 @@ require 'commander'
 require 'terminal-table'
 
 class PrimeMultiplicationTable
+  SIEVE_LIMIT = 10_000
+
   def initialize(total_count)
     @total_count = total_count
   end
@@ -22,7 +24,7 @@ class PrimeMultiplicationTable
   end
 
   def create_table
-    primes = sieve(10000).take(@total_count)
+    primes = sieve(SIEVE_LIMIT).take(@total_count)
 
     table = Terminal::Table.new do |t|
       t.headings = [' '] + primes
