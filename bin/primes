@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+require_relative '../lib/prime_multiplication_table'
+
+class Primes
+  include Commander::Methods
+
+  def run
+    program :name, 'primes'
+    program :version, '0.0.1'
+    program :description, 'Prime number multiplication table.'
+
+    default_command :generate
+
+    command :generate do |c|
+      c.syntax = 'bin/primes generate [options]'
+      c.description = 'Generate table that contains multiplication of prime numbers.'
+      c.example 'Assumes that it will return table with default count 10.', 'bin/primes generate'
+      c.example 'Assumes that it will return table that contains 5 columns and 5 rows.', 'bin/primes generate --count 5'
+      c.option '--count INT', Integer, 'Number of prime numbers.'
+      c.action do |args, options|
+        count = options.count || 10
+        PrimeMultiplicationTable.new(count).create_table
+      end
+    end
+
+    run!
+  end
+end
+
+Primes.new.run if $0 == __FILE__
